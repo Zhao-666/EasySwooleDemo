@@ -9,9 +9,7 @@
 namespace App\HttpController;
 
 
-use EasySwoole\Core\Http\AbstractInterface\Controller;
-
-class Category extends Controller
+class Category extends Base
 {
 
     public function index()
@@ -19,7 +17,7 @@ class Category extends Controller
         $data = [
             'id' => 1,
             'name' => 'test',
-            'params'=>$this->request()->getRequestParam()
+            'params' => $this->request()->getRequestParam()
         ];
         return $this->writeJson(200, '', $data);
     }

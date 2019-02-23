@@ -9,6 +9,7 @@
 namespace EasySwoole;
 
 use \EasySwoole\Core\AbstractInterface\EventInterface;
+use EasySwoole\Core\Component\Di;
 use \EasySwoole\Core\Swoole\ServerManager;
 use \EasySwoole\Core\Swoole\EventRegister;
 use \EasySwoole\Core\Http\Request;
@@ -25,6 +26,14 @@ Class EasySwooleEvent implements EventInterface {
     public static function mainServerCreate(ServerManager $server,EventRegister $register): void
     {
         // TODO: Implement mainServerCreate() method.
+        Di::getInstance()->set('MYSQL',\MysqliDb::class,Array (
+                'host' => '192.168.56.1',
+                'username' => 'root',
+                'password' => '123123',
+                'db'=> 'imooc_video',
+                'port' => 3306,
+                'charset' => 'utf8')
+        );
     }
 
     public static function onRequest(Request $request,Response $response): void

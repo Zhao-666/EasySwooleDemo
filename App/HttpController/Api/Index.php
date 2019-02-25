@@ -8,6 +8,7 @@
 
 namespace App\HttpController\Api;
 
+use App\Lib\Redis\Redis;
 use EasySwoole\Core\Component\Di;
 use EasySwoole\Core\Http\AbstractInterface\Controller;
 
@@ -32,9 +33,7 @@ class Index extends Controller
 
     public function getRedis()
     {
-        $redis = new \Redis();
-        $redis->connect('127.0.0.1', '6379');
-        $data = $redis->get('hello');
+        $data = Redis::getInstance()->get('hello');
         return $this->writeJson(200, '', $data);
     }
 }

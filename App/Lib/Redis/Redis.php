@@ -41,4 +41,12 @@ class Redis
         }
         return $this->redis->get($key);
     }
+
+    public function set($key, $value)
+    {
+        if (empty($key) || empty($value)) {
+            return '';
+        }
+        return $this->redis->set($key, $value);
+    }
 }

@@ -33,6 +33,7 @@ class Index extends Controller
 
     public function getRedis()
     {
+        Redis::getInstance()->set('hello','haha');
         $data = Redis::getInstance()->get('hello');
         return $this->writeJson(200, '', $data);
     }

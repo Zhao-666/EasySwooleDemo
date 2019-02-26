@@ -18,4 +18,14 @@ class Base extends Controller
     {
         // TODO: Implement index() method.
     }
+
+    public function onRequest($action):?bool
+    {
+        return true;
+    }
+
+    public function onException(\Throwable $throwable, $actionName): void
+    {
+        $this->writeJson(400, '请求不合法');
+    }
 }

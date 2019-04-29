@@ -33,8 +33,14 @@ class Index extends Controller
 
     public function getRedis()
     {
-        Redis::getInstance()->set('hello','haha');
-        $data = Redis::getInstance()->get('hello');
+        Redis::getInstance()->set('hello', 'qweqwe');
+        $data = Di::getInstance()->get('REDIS')->get('hello');
         return $this->writeJson(200, '', $data);
+    }
+
+    public function yaconf()
+    {
+        $conf = \Yaconf::get('redis');
+        return $this->writeJson(200, '', $conf);
     }
 }

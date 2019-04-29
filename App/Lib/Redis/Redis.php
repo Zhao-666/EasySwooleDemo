@@ -23,8 +23,12 @@ class Redis
             throw new \Exception("redis.so文件不存在");
         }
         try {
+//            $redisConfig = Config::getInstance()->getConf('redis');
+
+            $redisConfig = \Yaconf::get('redis');
             $this->redis = new \Redis();
-            $result = $this->redis->connect("127.0.0.1");
+            $result = $this->redis->connect($redisConfig['host'], $redisConfig['port']
+                , $redisConfig['time_out']);
         } catch (\Exception $e) {
             throw new \Exception("redis服务异常");
         }

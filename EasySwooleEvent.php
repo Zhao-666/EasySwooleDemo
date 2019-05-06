@@ -8,12 +8,14 @@
 
 namespace EasySwoole;
 
+use App\Lib\Process\ConsumerTest;
 use App\Lib\Redis\Redis;
 use EasySwoole\Core\AbstractInterface\EventInterface;
 use EasySwoole\Core\Component\Di;
 use EasySwoole\Core\Http\Request;
 use EasySwoole\Core\Http\Response;
 use EasySwoole\Core\Swoole\EventRegister;
+use EasySwoole\Core\Swoole\Process\ProcessManager;
 use EasySwoole\Core\Swoole\ServerManager;
 use EasySwoole\Core\Utility\File;
 
@@ -24,7 +26,7 @@ Class EasySwooleEvent implements EventInterface
     {
         // TODO: Implement frameInitialize() method.
         date_default_timezone_set('Asia/Shanghai');
-        self::loadFile(EASYSWOOLE_ROOT.'/Config');
+        self::loadFile(EASYSWOOLE_ROOT . '/Config');
     }
 
     public static function loadFile($confPath)
@@ -50,6 +52,11 @@ Class EasySwooleEvent implements EventInterface
         );
 
         Di::getInstance()->set('REDIS', Redis::getInstance());
+
+        $allNum = 3;
+        for ($i = 0; $i < $allNum; $i++) {
+            ProcessManager::getInstance()->addProcess("consumer_test_{$i}", ConsumerTest::class);
+        }
     }
 
     public static function onRequest(Request $request, Response $response): void

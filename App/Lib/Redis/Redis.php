@@ -23,8 +23,6 @@ class Redis
             throw new \Exception("redis.so文件不存在");
         }
         try {
-//            $redisConfig = Config::getInstance()->getConf('redis');
-
             $redisConfig = \Yaconf::get('redis');
             $this->redis = new \Redis();
             $result = $this->redis->connect($redisConfig['host'], $redisConfig['port']
@@ -38,19 +36,8 @@ class Redis
         return $this;
     }
 
-    public function get($key)
+    public function __call($name, $arguments)
     {
-        if (empty($key)) {
-            return '';
-        }
-        return $this->redis->get($key);
-    }
-
-    public function set($key, $value)
-    {
-        if (empty($key) || empty($value)) {
-            return '';
-        }
-        return $this->redis->set($key, $value);
+        return $this->redis->{$name}(...$arguments);
     }
 }
